@@ -117,7 +117,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ForgotPasswordRst forgotPassword(ForgotPasswordDxo dxo) {
-        return null;
+        ForgotPasswordRst rst = new ForgotPasswordRst();
+        User user = userRepository.findUserByUserNameIsAndDeleted(dxo.getUserName(), Constants.DELETE.FALSE);
+        if (user == null) {
+            rst.setResult(false);
+            ErrorService errorService = new ErrorService("userName", "email is not exists!");
+            rst.setErrorServices(Arrays.asList(errorService));
+        } else {
+            String password = PasswordGenerate.generatePassword();
+            log.info("{} has change password: {}", dxo.getUserName(), password);
+            user.setPassword(passwordEncoder.encode(password));
+            userRepository.save(user);
+            rst.setResult(true);
+        }
+        return rst;
     }
 
     /**

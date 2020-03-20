@@ -4,7 +4,9 @@ import haui.doan.stores.business.service.CommonService;
 import haui.doan.stores.business.service.UserService;
 import haui.doan.stores.dto.errors.ErrorValidator;
 import haui.doan.stores.dto.request.ChangePasswordRequest;
+import haui.doan.stores.dto.request.ForgotPasswordRequest;
 import haui.doan.stores.dto.response.ChangePasswordResponse;
+import haui.doan.stores.dto.response.ForgotPasswordResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.validation.BindingResult;
@@ -29,5 +31,14 @@ public class PasswordController {
             return userService.changePassword(request.toDxo()).toResponse();
         }
         return new ChangePasswordResponse(false, errorValidators);
+    }
+
+    @PostMapping("/forgotPassword")
+    public ForgotPasswordResponse forgotPassword(@Valid ForgotPasswordRequest request, BindingResult result) {
+        List<ErrorValidator> errorValidators = commonService.bindResult(result);
+        if (CollectionUtils.isEmpty(errorValidators)) {
+            return userService.forgotPassword(request.toDxo()).toResponse();
+        }
+        return new ForgotPasswordResponse(false, errorValidators);
     }
 }
