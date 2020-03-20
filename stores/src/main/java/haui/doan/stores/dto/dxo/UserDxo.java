@@ -1,6 +1,7 @@
 package haui.doan.stores.dto.dxo;
 
 import haui.doan.stores.domain.enums.EGender;
+import haui.doan.stores.domain.enums.ERole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,6 +22,10 @@ public class UserDxo extends DXO {
 
     private String userName;
 
+    private ERole role;
+
+    private String name;
+
     private String imageLink;
 
     private MultipartFile image;
@@ -32,6 +37,8 @@ public class UserDxo extends DXO {
     private EGender gender;
 
     private Date birthDay;
+
+    private int status;
 
     private int deleted;
 

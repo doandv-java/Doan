@@ -4,12 +4,13 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class User {
     private String password;
 
     @Column(name = "role")
-    private int role;
+    private String role;
 
     @Column(name = "name")
     private String name;
@@ -56,6 +57,6 @@ public class User {
     @Column(name = "deleted")
     private int deleted;
 
-    @OneToMany(mappedBy = "user")
-    List<Order> orders = Collections.EMPTY_LIST;
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    List<Order> orders = new ArrayList<>();
 }

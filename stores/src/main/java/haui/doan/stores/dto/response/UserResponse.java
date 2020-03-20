@@ -27,4 +27,8 @@ public class UserResponse extends RESPONSE {
     @JsonIgnore
     private List<ErrorValidator> errorValidators;
 
+    public UserResponse(boolean result, List<ErrorValidator> errorValidators) {
+        this.result = result;
+        this.errorValidators = errorValidators;
+    }
 }

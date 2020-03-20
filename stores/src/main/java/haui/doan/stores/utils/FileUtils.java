@@ -13,14 +13,26 @@ import java.time.Instant;
  *
  * @author <i>DoanDV</i>
  */
-
 @Slf4j
 public class FileUtils {
 
+    /**
+     * Check file multi part file empty or null
+     *
+     * @param file file multi part file
+     * @return boolean true false
+     */
     public static boolean checkNullOrEmptyImage(MultipartFile file) {
         return file == null || file.isEmpty() || file.getSize() == 0;
     }
 
+    /**
+     * Save image file in to the directory path
+     *
+     * @param theDir the directory root for store image upload
+     * @param file   the multi part file image
+     * @return the string path of file image saved in storage
+     */
     public static String saveImage(String theDir, MultipartFile file) {
         Path root = Path.of(theDir);
         Long timeNow = Instant.now().getEpochSecond();
@@ -30,24 +42,28 @@ public class FileUtils {
                     root.resolve(newFileName));
             return "/" + theDir + "/" + newFileName;
         } catch (Exception e) {
+            log.error("Fail to save image!!");
             throw new RuntimeException("FAIL!");
         }
     }
 
-    public static boolean createDirectoryIfNotExist(String directory) {
+    /**
+     * The method create directory if directory is not exists
+     *
+     * @param directory the path of directory
+     */
+    public static void createDirectoryIfNotExist(String directory) {
         try {
             File theDir = new File(directory);
             if (theDir.exists()) {
                 log.info("The {} directory had existed", theDir);
-                return true;
+                return;
             }
             theDir.mkdirs();
             log.info("Created {} directory", theDir);
         } catch (Exception e) {
             log.info("Exception: {}", e.getMessage());
-            return false;
         }
-        return true;
 
     }
 

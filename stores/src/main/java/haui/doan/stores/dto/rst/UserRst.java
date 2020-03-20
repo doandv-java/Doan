@@ -22,7 +22,6 @@ public class UserRst extends RST {
     private List<ErrorService> errorServices;
 
     @Override
-
     public UserResponse toResponse() {
         UserResponse userResponse = new UserResponse();
         userResponse.setResult(result);

@@ -6,4 +6,6 @@ import haui.doan.stores.dto.rst.UserRst;
 public interface UserService {
 
     UserRst saveUser(UserDxo userDxo);
+
+    boolean existUser(String userName, String userNameOld);
 }

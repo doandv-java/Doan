@@ -15,4 +15,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return the user information  {@link User}
      */
     User findUserByUserNameIsAndDeleted(String userName, int deleted);
+
+    /**
+     * The method to get information user by id
+     * if user exists then return data of user else then return null
+     *
+     * @param id the key of user with long value
+     * @return the information of user
+     */
+    User findUserById(Long id);
 }

@@ -44,15 +44,13 @@ public class UserDetailCustomServiceImpl implements UserDetailCustomService {
         //Get user with user name and not deleted
         User user = userRepository.findUserByUserNameIsAndDeleted(username, Constants.DELETE.FALSE);
         if (user == null) {
-            if (user == null) {
-                log.error("Unknown User");
-                throw new UsernameNotFoundException("Unknown User");
-            }
+            log.error("Unknown User");
+            throw new UsernameNotFoundException("Unknown User");
         }
         //Set authority of user login
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        log.info("{} has role: {}", user, ERole.of(user.getRole()).getText());
-        grantedAuthorities.add(new SimpleGrantedAuthority(ERole.of(user.getRole()).getText()));
+        log.info("{} has role: {}", user.getUserName(), user.getRole());
+        grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
         //Return session of user login
         return new UserPrincipal(
                 user, true, true, true, true,

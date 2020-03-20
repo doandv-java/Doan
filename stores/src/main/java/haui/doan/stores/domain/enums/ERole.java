@@ -10,17 +10,17 @@ public enum ERole {
     EMPLOYEE(1, "EMPLOYEE"),
     ADMIN(2, "ADMIN");
 
-    private int role;
+    private int value;
     private String text;
 
-    ERole(int role, String text) {
-        this.role = role;
+    ERole(int value, String text) {
+        this.value = value;
         this.text = text;
     }
 
-    public static ERole of(int role) {
+    public static ERole of(int value) {
         return EnumSet.allOf(ERole.class).stream()
-                .filter(eRole -> eRole.getRole() == role)
+                .filter(eRole -> eRole.getValue() == value)
                 .findFirst()
                 .orElse(null);
     }

@@ -7,4 +7,7 @@ import lombok.EqualsAndHashCode;
 @Data
 public class ErrorValidator extends ERROR {
 
+    public ErrorValidator(String field, String message) {
+        super(field, message);
+    }
 }

@@ -1,6 +1,7 @@
 package haui.doan.stores.dto.request;
 
 import haui.doan.stores.domain.enums.EGender;
+import haui.doan.stores.domain.enums.ERole;
 import haui.doan.stores.dto.dxo.UserDxo;
 import haui.doan.stores.framework.Constants;
 import haui.doan.stores.utils.DateUtils;
@@ -61,11 +62,14 @@ public class UserRequest extends REQUEST {
         UserDxo userDxo = new UserDxo();
         userDxo.setId(id);
         userDxo.setUserName(StringUtils.trimToEmpty(username));
+        userDxo.setRole(ERole.of(role));
+        userDxo.setName(StringUtils.capitalize(StringUtils.trimToEmpty(name)));
         userDxo.setImageLink(imageLink);
         userDxo.setImage(image);
         userDxo.setAddress(StringUtils.capitalize(StringUtils.trimToEmpty(address)));
         userDxo.setPhone(StringUtils.trimToEmpty(phone));
         userDxo.setGender(EGender.of(gender));
+        userDxo.setStatus(status);
         birthDay = StringUtils.trimToEmpty(birthDay);
         Date birthDate = null;
         //Check string birth day is null
