@@ -1,7 +1,5 @@
 package haui.doan.stores.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import haui.doan.stores.dto.errors.ErrorService;
 import haui.doan.stores.dto.errors.ErrorValidator;
 import lombok.AllArgsConstructor;
@@ -15,21 +13,13 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResponse extends RESPONSE {
+public class ForgotPasswordResponse extends RESPONSE {
 
-    private static final long serialVersionUID = -66940075860921561L;
-
+    private static final long serialVersionUID = 6673149973188109004L;
 
     private boolean result;
 
-    @JsonInclude(Include.NON_NULL)
     private List<ErrorService> errorServices;
 
-    @JsonInclude(Include.NON_NULL)
     private List<ErrorValidator> errorValidators;
-
-    public UserResponse(boolean result, List<ErrorValidator> errorValidators) {
-        this.result = result;
-        this.errorValidators = errorValidators;
-    }
 }

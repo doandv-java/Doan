@@ -3,8 +3,12 @@ package haui.doan.stores.business.implement;
 import haui.doan.stores.business.service.ImageService;
 import haui.doan.stores.business.service.UserService;
 import haui.doan.stores.domain.User;
+import haui.doan.stores.dto.dxo.ChangePasswordDxo;
+import haui.doan.stores.dto.dxo.ForgotPasswordDxo;
 import haui.doan.stores.dto.dxo.UserDxo;
 import haui.doan.stores.dto.errors.ErrorService;
+import haui.doan.stores.dto.rst.ChangePasswordRst;
+import haui.doan.stores.dto.rst.ForgotPasswordRst;
 import haui.doan.stores.dto.rst.UserRst;
 import haui.doan.stores.framework.Constants;
 import haui.doan.stores.repository.UserRepository;
@@ -78,6 +82,42 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
         }
         return userRst;
+    }
+
+
+    /**
+     * Change password of user
+     *
+     * @param dxo the data includes id, password Old, password New {@link ChangePasswordDxo}
+     * @return the result and error service can exists {@link ChangePasswordRst}
+     */
+    @Override
+    public ChangePasswordRst changePassword(ChangePasswordDxo dxo) {
+        ChangePasswordRst rst = new ChangePasswordRst();
+        //Get user with id
+        User user = userRepository.findUserById(dxo.getId());
+        if (user == null) {
+            // User not exist
+            ErrorService errorService = new ErrorService("id", "not exist user!");
+            rst.setStatus(false);
+            rst.setErrorServices(Arrays.asList(errorService));
+        } else if (passwordEncoder.matches(dxo.getPasswordOld(), user.getPassword())) {
+            //Password is matches password encode
+            user.setPassword(passwordEncoder.encode(dxo.getPassWordNew()));
+            userRepository.save(user);
+            rst.setStatus(true);
+        } else {
+            //Not matches password encode
+            ErrorService errorService = new ErrorService("passwordOld", "password not correct!");
+            rst.setStatus(false);
+            rst.setErrorServices(Arrays.asList(errorService));
+        }
+        return rst;
+    }
+
+    @Override
+    public ForgotPasswordRst forgotPassword(ForgotPasswordDxo dxo) {
+        return null;
     }
 
     /**

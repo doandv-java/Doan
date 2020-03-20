@@ -15,20 +15,17 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResponse extends RESPONSE {
-
-    private static final long serialVersionUID = -66940075860921561L;
-
+public class ChangePasswordResponse extends RESPONSE {
 
     private boolean result;
 
     @JsonInclude(Include.NON_NULL)
-    private List<ErrorService> errorServices;
+    List<ErrorService> errorServices;
 
     @JsonInclude(Include.NON_NULL)
-    private List<ErrorValidator> errorValidators;
+    List<ErrorValidator> errorValidators;
 
-    public UserResponse(boolean result, List<ErrorValidator> errorValidators) {
+    public ChangePasswordResponse(boolean result, List<ErrorValidator> errorValidators) {
         this.result = result;
         this.errorValidators = errorValidators;
     }
