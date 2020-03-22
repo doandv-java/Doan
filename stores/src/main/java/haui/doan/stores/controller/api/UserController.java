@@ -3,14 +3,14 @@ package haui.doan.stores.controller.api;
 import haui.doan.stores.business.service.CommonService;
 import haui.doan.stores.business.service.UserService;
 import haui.doan.stores.dto.errors.ErrorValidator;
+import haui.doan.stores.dto.request.DeleteUserRequest;
 import haui.doan.stores.dto.request.UserRequest;
+import haui.doan.stores.dto.response.DeleteUserResponse;
 import haui.doan.stores.dto.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -49,5 +49,16 @@ public class UserController {
         }
     }
 
+    /**
+     * Delete User with long id
+     *
+     * @param id the id of user
+     * @return result of delete user {@link DeleteUserResponse}
+     */
+    @DeleteMapping("/{id}")
+    public DeleteUserResponse deleteUser(@PathVariable("id") Long id) {
+        DeleteUserRequest request = new DeleteUserRequest(id);
+        return userService.deleteUser(request.toDxo()).toResponse();
+    }
 
 }

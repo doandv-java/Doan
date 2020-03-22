@@ -3,15 +3,9 @@ package haui.doan.stores.business.implement;
 import haui.doan.stores.business.service.ImageService;
 import haui.doan.stores.business.service.UserService;
 import haui.doan.stores.domain.User;
-import haui.doan.stores.dto.dxo.ChangePasswordDxo;
-import haui.doan.stores.dto.dxo.ForgotPasswordDxo;
-import haui.doan.stores.dto.dxo.RegisterDxo;
-import haui.doan.stores.dto.dxo.UserDxo;
+import haui.doan.stores.dto.dxo.*;
 import haui.doan.stores.dto.errors.ErrorService;
-import haui.doan.stores.dto.rst.ChangePasswordRst;
-import haui.doan.stores.dto.rst.ForgotPasswordRst;
-import haui.doan.stores.dto.rst.RegisterRst;
-import haui.doan.stores.dto.rst.UserRst;
+import haui.doan.stores.dto.rst.*;
 import haui.doan.stores.framework.Constants;
 import haui.doan.stores.repository.UserRepository;
 import haui.doan.stores.utils.PasswordGenerate;
@@ -197,5 +191,30 @@ public class UserServiceImpl implements UserService {
             boolean notExist = (user == null) || userName.equals(userNameOld);
             return !notExist;
         }
+    }
+
+    /**
+     * Delete user then change deleted from false into true
+     *
+     * @param dxo the id of delete user  {@link DeleteUserDxo}
+     * @return the result of delete include result or error service {@link DeleteUserRst}
+     */
+    @Override
+    public DeleteUserRst deleteUser(DeleteUserDxo dxo) {
+        DeleteUserRst rst = new DeleteUserRst();
+        //find user with id
+        User existedUser = userRepository.findUserById(dxo.getId());
+        if (existedUser == null) {
+            //id not exist in database
+            ErrorService errorService = new ErrorService("id", "user not exists");
+            rst.setResult(false);
+            rst.setErrorServices(Arrays.asList(errorService));
+        } else {
+            //user with id exists
+            existedUser.setDeleted(Constants.DELETE.TRUE);
+            userRepository.save(existedUser);
+            rst.setResult(true);
+        }
+        return rst;
     }
 }

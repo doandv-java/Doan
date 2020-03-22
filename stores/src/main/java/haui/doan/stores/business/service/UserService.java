@@ -1,13 +1,7 @@
 package haui.doan.stores.business.service;
 
-import haui.doan.stores.dto.dxo.ChangePasswordDxo;
-import haui.doan.stores.dto.dxo.ForgotPasswordDxo;
-import haui.doan.stores.dto.dxo.RegisterDxo;
-import haui.doan.stores.dto.dxo.UserDxo;
-import haui.doan.stores.dto.rst.ChangePasswordRst;
-import haui.doan.stores.dto.rst.ForgotPasswordRst;
-import haui.doan.stores.dto.rst.RegisterRst;
-import haui.doan.stores.dto.rst.UserRst;
+import haui.doan.stores.dto.dxo.*;
+import haui.doan.stores.dto.rst.*;
 
 /**
  * Service for user logic
@@ -56,4 +50,12 @@ public interface UserService {
      * @return the boolean value
      */
     boolean existUser(String userName, String userNameOld);
+
+    /**
+     * Delete User with id;
+     *
+     * @param dxo the id of delete user {@link DeleteUserDxo}
+     * @return the result of delete user {@link DeleteUserRst}
+     */
+    DeleteUserRst deleteUser(DeleteUserDxo dxo);
 }

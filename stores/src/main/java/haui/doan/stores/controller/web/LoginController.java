@@ -43,7 +43,7 @@ public class LoginController {
         ModelAndView mav = new ModelAndView();
         //Check role of user login
         User user = commonService.loadUserDetail();
-        if (user.getRole().equals(ERole.EMPLOYEE.getText())) {
+        if (user.getRole().equals(ERole.CUSTOMER.getText())) {
             mav.setViewName("redirect:/home");
         } else {
             mav.setViewName("redirect:/admin/home");

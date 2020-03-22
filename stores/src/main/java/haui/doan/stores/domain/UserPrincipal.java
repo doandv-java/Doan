@@ -1,8 +1,8 @@
 package haui.doan.stores.domain;
 
-import org.springframework.security.core.GrantedAuthority;
+        import org.springframework.security.core.GrantedAuthority;
 
-import java.util.Collection;
+        import java.util.Collection;
 
 public class UserPrincipal extends org.springframework.security.core.userdetails.User {
 

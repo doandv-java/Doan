@@ -9,16 +9,21 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.validation.constraints.NotBlank;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest extends REQUEST {
 
+    @NotBlank
     private String userName;
 
+    @NotBlank
     private String password;
 
+    @NotBlank
     private String name;
 
     @Override
