@@ -5,10 +5,12 @@ import haui.doan.stores.business.service.UserService;
 import haui.doan.stores.domain.User;
 import haui.doan.stores.dto.dxo.ChangePasswordDxo;
 import haui.doan.stores.dto.dxo.ForgotPasswordDxo;
+import haui.doan.stores.dto.dxo.RegisterDxo;
 import haui.doan.stores.dto.dxo.UserDxo;
 import haui.doan.stores.dto.errors.ErrorService;
 import haui.doan.stores.dto.rst.ChangePasswordRst;
 import haui.doan.stores.dto.rst.ForgotPasswordRst;
+import haui.doan.stores.dto.rst.RegisterRst;
 import haui.doan.stores.dto.rst.UserRst;
 import haui.doan.stores.framework.Constants;
 import haui.doan.stores.repository.UserRepository;
@@ -115,6 +117,12 @@ public class UserServiceImpl implements UserService {
         return rst;
     }
 
+    /**
+     * Forgot password  with username
+     *
+     * @param dxo the data of forgot password {@link ForgotPasswordDxo}
+     * @return the result of forgot password {@link ForgotPasswordRst}
+     */
     @Override
     public ForgotPasswordRst forgotPassword(ForgotPasswordDxo dxo) {
         ForgotPasswordRst rst = new ForgotPasswordRst();
@@ -128,6 +136,41 @@ public class UserServiceImpl implements UserService {
             log.info("{} has change password: {}", dxo.getUserName(), password);
             user.setPassword(passwordEncoder.encode(password));
             userRepository.save(user);
+            rst.setResult(true);
+        }
+        return rst;
+    }
+
+    /**
+     * Register user includes username, password and name with role customer and delete is no
+     *
+     * @param dxo the data of register {@link RegisterDxo}
+     * @return the result of register {@link RegisterRst}
+     */
+    @Override
+    public RegisterRst registerCustomer(RegisterDxo dxo) {
+        RegisterRst rst = new RegisterRst();
+        //Get user with username from dxo
+        User existUser = userRepository.findUserByUserNameIsAndDeleted(dxo.getUsername(), Constants.DELETE.FALSE);
+        if (existUser != null) {
+            //user with user name register exists
+            ErrorService errorService = new ErrorService("userName", "email is existed!");
+            rst.setResult(false);
+            rst.setErrorServices(Arrays.asList(errorService));
+        } else {
+            //no user exist with username of register
+            existUser = new User();
+            existUser.setUserName(dxo.getUsername());
+            existUser.setName(dxo.getName());
+            log.info("{} register success with password:{}", dxo.getUsername(), dxo.getPassword());
+            existUser.setPassword(passwordEncoder.encode(dxo.getPassword()));
+            existUser.setRole(dxo.getRole().getText());
+            existUser.setGender(dxo.getGender().getValue());
+            existUser.setImageLink(Constants.IMAGE_DEFAULT.NAME);
+            existUser.setDeleted(Constants.DELETE.FALSE);
+            //save user
+            userRepository.save(existUser);
+            //set result is true
             rst.setResult(true);
         }
         return rst;

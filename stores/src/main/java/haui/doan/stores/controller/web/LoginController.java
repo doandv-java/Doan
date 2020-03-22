@@ -48,9 +48,7 @@ public class LoginController {
         } else {
             mav.setViewName("redirect:/admin/home");
         }
-
         return mav;
     }
-
 
 }

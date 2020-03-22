@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * The API of  user
+ *
+ * @author Duong Van Doan
+ */
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -27,6 +32,13 @@ public class UserController {
     private final CommonService commonService;
 
 
+    /**
+     * The method of save user
+     *
+     * @param request the User request {@link UserRequest}
+     * @param result  The binding result of validator of request
+     * @return The result of save User {@link UserResponse}
+     */
     @PostMapping("")
     public UserResponse saveUser(@Valid UserRequest request, BindingResult result) {
         List<ErrorValidator> errorValidators = commonService.bindResult(result);
@@ -36,4 +48,6 @@ public class UserController {
             return userService.saveUser(request.toDxo()).toResponse();
         }
     }
+
+
 }
