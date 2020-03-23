@@ -22,7 +22,7 @@ public class AdminController {
     @GetMapping(value = "/home")
     public ModelAndView viewHome() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("/admin/home");
+        mav.setViewName("admin/home");
         return mav;
     }
 
@@ -34,7 +34,7 @@ public class AdminController {
     @GetMapping("/profile")
     public ModelAndView viewProfile() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("/admin/profile");
+        mav.setViewName("admin/profile");
         return mav;
     }
 }

@@ -23,10 +23,11 @@ public class CommonServiceImpl implements CommonService {
     /**
      * Get information of user login
      *
-     * @return
+     * @return {@link User}
      */
     @Override
     public User loadUserDetail() {
+
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ((UserPrincipal) userDetails).getUser();
     }

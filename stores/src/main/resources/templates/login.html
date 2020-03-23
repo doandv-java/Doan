@@ -22,6 +22,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72"
           th:href="@{/libs/users/images/ico/apple-touch-icon-72-precomposed.png}">
     <link rel="apple-touch-icon-precomposed" th:href="@{/libs/users/images/ico/apple-touch-icon-57-precomposed.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <!--/head-->
 
@@ -54,7 +55,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
-                        <a href="index.html"><img th:src="@{/libs/users/images/home/logo.png}" alt=""/></a>
+                        <a th:href="@{/home}"><img th:src="@{/libs/users/images/home/logo.png}" alt=""/></a>
                     </div>
                     <div class="btn-group pull-right">
                     </div>
@@ -75,11 +76,16 @@
                 <div class="login-form">
                     <!--login form-->
                     <h2>Đăng nhập</h2>
+                    <div th:if="${param.error}">
+                        <div class="alert alert-danger center">
+                            Đăng nhập không thành công
+                        </div>
+                    </div>
                     <form th:action="@{/login}" method="post">
-                        <input type="email" name="userName" placeholder="Email"/>
-                        <input type="password" name="password" placeholder="Password"/>
+                        <input type="email" name="username" placeholder="Email">
+                        <input type="password" name="password" placeholder="Password">
                         <span>
-                                <a href="#" data-toggle="modal" data-target="#forgotPasswordModal">Quên mật khẩu?</a>
+                                <a href="#" data-toggle="modal" id="forgotBtn" data-target="#forgotPasswordModal">Quên mật khẩu?</a>
                                 <a th:href="@{/register}" class="pull-right">Tạo tài khoản mới?</a>
                             </span>
                         <button type="submit" class="btn btn-default">Đăng nhập</button>
@@ -106,8 +112,8 @@
             </div>
             <div class="modal-body">
                 <div class="row text-center">
-                    <input type="email" placeholder="Email send request" class="form-control" id="userName"/>
-                    <label class="has-error" id="userName_error"></label>
+                    <input class="form-control" id="userName" placeholder="Email send request" type="email"/>
+                    <label class="error" id="userName_errors"></label>
                 </div>
             </div>
             <div class="modal-footer">
@@ -123,43 +129,6 @@
 <script th:src="@{/libs/users/js/bootstrap.min.js}"></script>
 <script th:src="@{/libs/users/js/jquery.prettyPhoto.js}"></script>
 <script th:src="@{/libs/users/js/main.js}"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#btnSend').click(function (e) {
-            let forgotModal = $('#forgotPasswordModal');
-            let userName = $('#userName').val();
-            let data = {"userName": userName};
-            let settings = {
-                type: "POST",
-                data: JSON.stringify(data),
-                url: "/forgotPassword",
-                timeout: 6000,
-                cache: false,
-                success: function (data) {
-                    console.log(data);
-                    if (data.result) {
-                        $('#userName').val('');
-                        forgotModal.modal('hide');
-                    } else {
-                        let validator = data.errorValidators;
-                        let service = data.errorServices;
-                        viewError(validator);
-                        viewError(service);
-                    }
-                }
-            };
-            $.ajax(settings);
-        });
-    });
-
-    function viewError(errors) {
-        if (errors != null) {
-            for (i = 0, i < errors.length, i++) {
-                let fieldId = errors[i].field;
-                $("#" + fieldId + "_errors").text(errors[i].message);
-            }
-        }
-    }
-</script>
+<script type="text/javascript" th:src="@{/js/forgotPass.js}"></script>
 </body>
 </html>

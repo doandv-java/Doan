@@ -3,7 +3,6 @@ package haui.doan.stores.business.implement;
 import haui.doan.stores.business.service.UserDetailCustomService;
 import haui.doan.stores.domain.User;
 import haui.doan.stores.domain.UserPrincipal;
-import haui.doan.stores.domain.enums.ERole;
 import haui.doan.stores.framework.Constants;
 import haui.doan.stores.repository.UserRepository;
 import lombok.AllArgsConstructor;

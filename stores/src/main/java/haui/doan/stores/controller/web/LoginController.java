@@ -57,4 +57,11 @@ public class LoginController {
         mav.setViewName("register");
         return mav;
     }
+
+    @GetMapping("/404")
+    public ModelAndView view404Page() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("404");
+        return mav;
+    }
 }

@@ -1,6 +1,7 @@
 package haui.doan.stores.controller.web;
 
 import haui.doan.stores.business.service.CommonService;
+import haui.doan.stores.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +24,10 @@ public class HomeController {
      */
     @GetMapping(value = "/home")
     public ModelAndView viewHome() {
+
         var mav = new ModelAndView();
         mav.setViewName("index");
+
         return mav;
     }
 }

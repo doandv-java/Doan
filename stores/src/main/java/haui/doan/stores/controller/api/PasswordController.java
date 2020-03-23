@@ -11,8 +11,10 @@ import haui.doan.stores.dto.response.ForgotPasswordResponse;
 import haui.doan.stores.dto.response.RegisterResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -56,8 +58,8 @@ public class PasswordController {
      * @param result  the binding result of validator of request
      * @return the result of forgot password {@link ForgotPasswordResponse}
      */
-    @PostMapping("/forgotPassword")
-    public ForgotPasswordResponse forgotPassword(@Valid ForgotPasswordRequest request, BindingResult result) {
+    @PostMapping(value = "/forgotPassword",produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ForgotPasswordResponse forgotPassword(@Valid @RequestBody ForgotPasswordRequest request, BindingResult result) {
         List<ErrorValidator> errorValidators = commonService.bindResult(result);
         if (CollectionUtils.isEmpty(errorValidators)) {
             return userService.forgotPassword(request.toDxo()).toResponse();
