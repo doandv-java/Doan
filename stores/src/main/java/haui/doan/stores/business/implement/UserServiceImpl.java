@@ -4,10 +4,13 @@ import haui.doan.stores.business.service.ImageService;
 import haui.doan.stores.business.service.UserService;
 import haui.doan.stores.domain.User;
 import haui.doan.stores.domain.enums.EGender;
+import haui.doan.stores.domain.enums.EOrderState;
+import haui.doan.stores.dto.data.Order;
 import haui.doan.stores.dto.data.Profile;
 import haui.doan.stores.dto.dxo.ChangePasswordDxo;
 import haui.doan.stores.dto.dxo.DeleteUserDxo;
 import haui.doan.stores.dto.dxo.ForgotPasswordDxo;
+import haui.doan.stores.dto.dxo.OrderHistoryDxo;
 import haui.doan.stores.dto.dxo.ProfileDxo;
 import haui.doan.stores.dto.dxo.RegisterDxo;
 import haui.doan.stores.dto.dxo.UserDxo;
@@ -15,19 +18,24 @@ import haui.doan.stores.dto.errors.ErrorService;
 import haui.doan.stores.dto.rst.ChangePasswordRst;
 import haui.doan.stores.dto.rst.DeleteUserRst;
 import haui.doan.stores.dto.rst.ForgotPasswordRst;
+import haui.doan.stores.dto.rst.OrderHistoryRst;
 import haui.doan.stores.dto.rst.ProfileRst;
 import haui.doan.stores.dto.rst.RegisterRst;
 import haui.doan.stores.dto.rst.UserRst;
 import haui.doan.stores.framework.Constants;
 import haui.doan.stores.repository.UserRepository;
+import haui.doan.stores.utils.DateUtils;
 import haui.doan.stores.utils.PasswordGenerate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * The service for logic of user
@@ -262,6 +270,36 @@ public class UserServiceImpl implements UserService {
             rst.setResult(true);
             rst.setProfile(profile);
         }
+        return rst;
+    }
+
+
+    /**
+     * Get history order
+     *
+     * @param dxo includes userId {@link OrderHistoryDxo}
+     * @return the Order History rst {@link OrderHistoryRst}
+     */
+    @Override
+    public OrderHistoryRst getOrderHistory(OrderHistoryDxo dxo) {
+        OrderHistoryRst rst = new OrderHistoryRst();
+        List<Order> orderList = new ArrayList<>();
+        User user = userRepository.findUserById(dxo.getUserId());
+        if (user == null) {
+            log.error("User not exists");
+        } else {
+            CollectionUtils.emptyIfNull(user.getOrders()).stream().forEach(item -> {
+                Order order = new Order();
+                order.setId(item.getId());
+                order.setCreateOrderDate(DateUtils.format(item.getCreateOrderDate(), Constants.DATE_FORMAT.YYYY_MM_DD));
+                order.setState(EOrderState.of(item.getStatus()));
+                order.setTotal(item.getTotal());
+                orderList.add(order);
+            });
+            rst.setUserId(dxo.getUserId());
+            rst.setOrders(orderList);
+        }
+
         return rst;
     }
 }

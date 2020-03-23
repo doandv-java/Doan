@@ -20,7 +20,7 @@ public enum EOrderState {
         this.text = text;
     }
 
-    public EOrderState of(int state) {
+    public static EOrderState of(int state) {
         return EnumSet.allOf(EOrderState.class).stream()
                 .filter(eOrderState -> eOrderState.getState() == state)
                 .findFirst()

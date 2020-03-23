@@ -4,9 +4,11 @@ import haui.doan.stores.business.service.CommonService;
 import haui.doan.stores.business.service.UserService;
 import haui.doan.stores.dto.errors.ErrorValidator;
 import haui.doan.stores.dto.request.DeleteUserRequest;
+import haui.doan.stores.dto.request.OrderHistoryRequest;
 import haui.doan.stores.dto.request.ProfileRequest;
 import haui.doan.stores.dto.request.UserRequest;
 import haui.doan.stores.dto.response.DeleteUserResponse;
+import haui.doan.stores.dto.response.OrderHistoryResponse;
 import haui.doan.stores.dto.response.ProfileResponse;
 import haui.doan.stores.dto.response.UserResponse;
 import lombok.RequiredArgsConstructor;
@@ -80,6 +82,20 @@ public class UserController {
     public ResponseEntity<ProfileResponse> getProfile(@PathVariable("id") Long id) {
         ProfileRequest request = new ProfileRequest(id);
         return new ResponseEntity<>(userService.getProfile(request.toDxo()).toResponse(), HttpStatus.OK);
+    }
+
+
+    /**
+     * Get order history of user
+     *
+     * @param userId id of user
+     * @return order of user with id {@link OrderHistoryResponse}
+     */
+    @GetMapping("/{userId}/orders")
+    public ResponseEntity<OrderHistoryResponse> getOrderHistory(@PathVariable("userId") Long userId) {
+        OrderHistoryRequest request = new OrderHistoryRequest(userId);
+        OrderHistoryResponse response = userService.getOrderHistory(request.toDxo()).toResponse();
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

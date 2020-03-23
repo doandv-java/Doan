@@ -3,12 +3,14 @@ package haui.doan.stores.business.service;
 import haui.doan.stores.dto.dxo.ChangePasswordDxo;
 import haui.doan.stores.dto.dxo.DeleteUserDxo;
 import haui.doan.stores.dto.dxo.ForgotPasswordDxo;
+import haui.doan.stores.dto.dxo.OrderHistoryDxo;
 import haui.doan.stores.dto.dxo.ProfileDxo;
 import haui.doan.stores.dto.dxo.RegisterDxo;
 import haui.doan.stores.dto.dxo.UserDxo;
 import haui.doan.stores.dto.rst.ChangePasswordRst;
 import haui.doan.stores.dto.rst.DeleteUserRst;
 import haui.doan.stores.dto.rst.ForgotPasswordRst;
+import haui.doan.stores.dto.rst.OrderHistoryRst;
 import haui.doan.stores.dto.rst.ProfileRst;
 import haui.doan.stores.dto.rst.RegisterRst;
 import haui.doan.stores.dto.rst.UserRst;
@@ -79,4 +81,12 @@ public interface UserService {
      * @return the data of user {@link ProfileRst}
      */
     ProfileRst getProfile(ProfileDxo dxo);
+
+    /**
+     * Get order history by userId;
+     *
+     * @param dxo includes userId {@link OrderHistoryDxo}
+     * @return the data of list order {@link OrderHistoryDxo}
+     */
+    OrderHistoryRst getOrderHistory(OrderHistoryDxo dxo);
 }

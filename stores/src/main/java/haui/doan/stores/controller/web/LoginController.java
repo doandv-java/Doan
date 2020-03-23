@@ -26,7 +26,7 @@ public class LoginController {
      */
     @GetMapping(value = "/login")
     public ModelAndView viewLoginForm() {
-        ModelAndView mav = new ModelAndView();
+        var mav = new ModelAndView();
         mav.setViewName("login");
         return mav;
     }
@@ -40,7 +40,7 @@ public class LoginController {
      */
     @GetMapping("/checkUser")
     public ModelAndView checkRoleUser() {
-        ModelAndView mav = new ModelAndView();
+        var mav = new ModelAndView();
         //Check role of user login
         User user = commonService.loadUserDetail();
         if (user.getRole().equals(ERole.CUSTOMER.getText())) {
@@ -51,4 +51,10 @@ public class LoginController {
         return mav;
     }
 
+    @GetMapping("/register")
+    public ModelAndView viewRegister() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("register");
+        return mav;
+    }
 }

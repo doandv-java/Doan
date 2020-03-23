@@ -1,10 +1,165 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html >
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="doanstrores">
+    <meta name="author" content="doandv">
+    <title>Login | Doan Stores</title>
+    <link th:href="@{/libs/users/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{libs/users/css/font-awesome.min.css}" rel="stylesheet">
+    <link th:href="@{/libs/users/css/prettyPhoto.css}" rel="stylesheet">
+    <link th:href="@{/libs/users/css/price-range.css}" rel="stylesheet">
+    <link th:href="@{/libs/users/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/libs/users/css/main.css}" rel="stylesheet">
+    <link th:href="@{/libs/users/css/responsive.css}" rel="stylesheet">
+    <link rel="shortcut icon" th:href="@{/libs/users/images/ico/favicon.ico}">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144"
+          th:href="@{/libs/users/images/ico/apple-touch-icon-144-precomposed.png}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114"
+          th:href="@{/libs/users/images/ico/apple-touch-icon-114-precomposed.png}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72"
+          th:href="@{/libs/users/images/ico/apple-touch-icon-72-precomposed.png}">
+    <link rel="apple-touch-icon-precomposed" th:href="@{/libs/users/images/ico/apple-touch-icon-57-precomposed.png}">
 </head>
-<body>
+<!--/head-->
 
+<body>
+<header id="header">
+    <!--header-->
+    <div class="header_top">
+        <!--header_top-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="contactinfo">
+                        <ul class="nav nav-pills">
+                            <li><a href=""><i class="fa fa-phone"></i> 0975155726</a></li>
+                            <li><a href=""><i class="fa fa-envelope"></i> doandv@gmail.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/header_top-->
+
+    <div class="header-middle">
+        <!--header-middle-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="logo pull-left">
+                        <a href="index.html"><img th:src="@{/libs/users/images/home/logo.png}" alt=""/></a>
+                    </div>
+                    <div class="btn-group pull-right">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--/header-middle-->
+</header>
+<!--/header-->
+
+<section id="form">
+    <!--form-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-1">
+                <div class="login-form">
+                    <!--login form-->
+                    <h2>Đăng nhập</h2>
+                    <form th:action="@{/login}" method="post">
+                        <input type="email" name="userName" placeholder="Email"/>
+                        <input type="password" name="password" placeholder="Password"/>
+                        <span>
+                                <a href="#" data-toggle="modal" data-target="#forgotPasswordModal">Quên mật khẩu?</a>
+                                <a th:href="@{/register}" class="pull-right">Tạo tài khoản mới?</a>
+                            </span>
+                        <button type="submit" class="btn btn-default">Đăng nhập</button>
+                    </form>
+                </div>
+                <!--/login form-->
+            </div>
+        </div>
+    </div>
+</section>
+<!--/form-->
+
+<!--	Modal Forgot Password-->
+
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center text-primary" id="modalTitle">Quên mật khẩu?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-center">
+                    <input type="email" placeholder="Email send request" class="form-control" id="userName"/>
+                    <label class="has-error" id="userName_error"></label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-group" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary btn-group" id="btnSend">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/libs/users/js/jquery.js}"></script>
+<script th:src="@{/libs/users/js/price-range.js}"></script>
+<script th:src="@{/libs/users/js/jquery.scrollUp.min.js}"></script>
+<script th:src="@{/libs/users/js/bootstrap.min.js}"></script>
+<script th:src="@{/libs/users/js/jquery.prettyPhoto.js}"></script>
+<script th:src="@{/libs/users/js/main.js}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnSend').click(function (e) {
+            let forgotModal = $('#forgotPasswordModal');
+            let userName = $('#userName').val();
+            let data = {"userName": userName};
+            let settings = {
+                type: "POST",
+                data: JSON.stringify(data),
+                url: "/forgotPassword",
+                timeout: 6000,
+                cache: false,
+                success: function (data) {
+                    console.log(data);
+                    if (data.result) {
+                        $('#userName').val('');
+                        forgotModal.modal('hide');
+                    } else {
+                        let validator = data.errorValidators;
+                        let service = data.errorServices;
+                        viewError(validator);
+                        viewError(service);
+                    }
+                }
+            };
+            $.ajax(settings);
+        });
+    });
+
+    function viewError(errors) {
+        if (errors != null) {
+            for (i = 0, i < errors.length, i++) {
+                let fieldId = errors[i].field;
+                $("#" + fieldId + "_errors").text(errors[i].message);
+            }
+        }
+    }
+</script>
 </body>
 </html>
