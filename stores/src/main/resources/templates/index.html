@@ -55,14 +55,20 @@
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
-                            <li><a href="#"><i class="fa fa-user"></i> Tài khoản</a></li>
-                            <li><a href="#"><i class="fa fa-star"></i> Đơn hàng</a></li>
-                            <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
-                            <li><a th:href="@{/login}"><i class="fa fa-lock"></i> Đăng nhập</a></li>
-                            <li th:if="${#authorization.getAuthentication().getCredentials()==null}"><a th:href="@{/register}"><i class="fa fa-lock"></i> Đăng kí</a>
-                            </li>
-                            <li th:if="${#authorization.getAuthentication().getCredentials()!=null}"><a th:href="@{/logout}"><i
-                                    class="fa fa-lock"></i> Đăng xuất</a></li>
+                            <th:block th:if="${user==null}">
+                                <li><a th:href="@{/login}"><i class="fa fa-lock"></i> Đăng nhập</a>
+                                </li>
+                                <li><a th:href="@{/register}"><i class="fa fa-lock"></i> Đăng kí</a>
+                                </li>
+                            </th:block>
+                            <th:block th:unless="${user==null}">
+                                <li th:if="${user.role.equals('ADMIN')||user.role.equals('EMPLOYEE')}"><a th:href="@{/admin/home}"><i class="fa fa-home"></i> Trang quản trị</a></li>
+                                <li><a th:href="@{/profile}"><i class="fa fa-user"></i> Tài khoản</a></li>
+                                <li><a href="#"><i class="fa fa-star"></i> Đơn hàng</a></li>
+                                <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
+                                <li><a th:href="@{/logout}"><i
+                                        class="fa fa-lock"></i> Đăng xuất</a></li>
+                            </th:block>
                         </ul>
                     </div>
                 </div>

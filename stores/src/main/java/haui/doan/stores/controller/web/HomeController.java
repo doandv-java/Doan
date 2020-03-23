@@ -24,10 +24,10 @@ public class HomeController {
      */
     @GetMapping(value = "/home")
     public ModelAndView viewHome() {
-
+        User user = commonService.loadUserDetail();
         var mav = new ModelAndView();
         mav.setViewName("index");
-
+        mav.addObject("user", user);
         return mav;
     }
 }

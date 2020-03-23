@@ -28,8 +28,13 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public User loadUserDetail() {
 
+        Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (o.equals("anonymousUser")) {
+            return null;
+        }
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ((UserPrincipal) userDetails).getUser();
+
     }
 
     /**
