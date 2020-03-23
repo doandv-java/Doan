@@ -3,9 +3,21 @@ package haui.doan.stores.business.implement;
 import haui.doan.stores.business.service.ImageService;
 import haui.doan.stores.business.service.UserService;
 import haui.doan.stores.domain.User;
-import haui.doan.stores.dto.dxo.*;
+import haui.doan.stores.domain.enums.EGender;
+import haui.doan.stores.dto.data.Profile;
+import haui.doan.stores.dto.dxo.ChangePasswordDxo;
+import haui.doan.stores.dto.dxo.DeleteUserDxo;
+import haui.doan.stores.dto.dxo.ForgotPasswordDxo;
+import haui.doan.stores.dto.dxo.ProfileDxo;
+import haui.doan.stores.dto.dxo.RegisterDxo;
+import haui.doan.stores.dto.dxo.UserDxo;
 import haui.doan.stores.dto.errors.ErrorService;
-import haui.doan.stores.dto.rst.*;
+import haui.doan.stores.dto.rst.ChangePasswordRst;
+import haui.doan.stores.dto.rst.DeleteUserRst;
+import haui.doan.stores.dto.rst.ForgotPasswordRst;
+import haui.doan.stores.dto.rst.ProfileRst;
+import haui.doan.stores.dto.rst.RegisterRst;
+import haui.doan.stores.dto.rst.UserRst;
 import haui.doan.stores.framework.Constants;
 import haui.doan.stores.repository.UserRepository;
 import haui.doan.stores.utils.PasswordGenerate;
@@ -214,6 +226,41 @@ public class UserServiceImpl implements UserService {
             existedUser.setDeleted(Constants.DELETE.TRUE);
             userRepository.save(existedUser);
             rst.setResult(true);
+        }
+        return rst;
+    }
+
+    /**
+     * Get profile of user
+     *
+     * @param dxo includes id {@link ProfileDxo}
+     * @return data of user {@link ProfileRst}
+     */
+    @Override
+    public ProfileRst getProfile(ProfileDxo dxo) {
+        ProfileRst rst = new ProfileRst();
+        //Retrieve user with id
+        User user = userRepository.findUserById(dxo.getId());
+        if (user == null) {
+            //User is not exists
+            rst.setResult(false);
+        } else {
+            //User is exists
+            Profile profile = new Profile();
+            profile.setId(user.getId());
+            profile.setUserName(user.getUserName());
+            profile.setPassword(user.getPassword());
+            profile.setRole(user.getRole());
+            profile.setName(user.getName());
+            profile.setImageLink(user.getImageLink());
+            profile.setPhone(user.getPhone());
+            profile.setAddress(user.getAddress());
+            profile.setGender(EGender.of(user.getGender()).getText());
+            profile.setBirthDay(user.getBirthDay());
+            profile.setStatus(user.getStatus());
+            profile.setDeleted(user.getDeleted());
+            rst.setResult(true);
+            rst.setProfile(profile);
         }
         return rst;
     }

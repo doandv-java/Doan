@@ -5,6 +5,7 @@ import haui.doan.stores.domain.enums.ERole;
 import haui.doan.stores.dto.dxo.UserDxo;
 import haui.doan.stores.framework.Constants;
 import haui.doan.stores.utils.DateUtils;
+import haui.doan.stores.validate.annotations.DatePattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
@@ -28,7 +30,7 @@ public class UserRequest extends REQUEST {
     @NotBlank
     private String username;
 
-    @NotBlank
+    @NotNull
     private int role;
 
     private String name;
@@ -39,11 +41,13 @@ public class UserRequest extends REQUEST {
 
     private String address;
 
+
     private String phone;
 
-    @NotBlank
+    @NotNull
     private int gender;
 
+    @DatePattern
     private String birthDay;
 
     private int status;

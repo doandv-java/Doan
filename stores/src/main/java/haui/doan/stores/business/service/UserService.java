@@ -1,7 +1,17 @@
 package haui.doan.stores.business.service;
 
-import haui.doan.stores.dto.dxo.*;
-import haui.doan.stores.dto.rst.*;
+import haui.doan.stores.dto.dxo.ChangePasswordDxo;
+import haui.doan.stores.dto.dxo.DeleteUserDxo;
+import haui.doan.stores.dto.dxo.ForgotPasswordDxo;
+import haui.doan.stores.dto.dxo.ProfileDxo;
+import haui.doan.stores.dto.dxo.RegisterDxo;
+import haui.doan.stores.dto.dxo.UserDxo;
+import haui.doan.stores.dto.rst.ChangePasswordRst;
+import haui.doan.stores.dto.rst.DeleteUserRst;
+import haui.doan.stores.dto.rst.ForgotPasswordRst;
+import haui.doan.stores.dto.rst.ProfileRst;
+import haui.doan.stores.dto.rst.RegisterRst;
+import haui.doan.stores.dto.rst.UserRst;
 
 /**
  * Service for user logic
@@ -58,4 +68,15 @@ public interface UserService {
      * @return the result of delete user {@link DeleteUserRst}
      */
     DeleteUserRst deleteUser(DeleteUserDxo dxo);
+
+    /**
+     * Get Profile with id or email
+     * <p>
+     * if email or id not exists then return null
+     * </p>
+     *
+     * @param dxo includes id and email {@link ProfileDxo}
+     * @return the data of user {@link ProfileRst}
+     */
+    ProfileRst getProfile(ProfileDxo dxo);
 }
