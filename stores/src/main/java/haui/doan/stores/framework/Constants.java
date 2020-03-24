@@ -23,4 +23,8 @@ public class Constants {
         String NAME = "/upload/default.png";
     }
 
+    public interface MAIL {
+        String FROM = "doan.laptop.stores@gmail.com";
+    }
+
 }

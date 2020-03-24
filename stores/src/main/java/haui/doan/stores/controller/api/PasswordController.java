@@ -58,7 +58,7 @@ public class PasswordController {
      * @param result  the binding result of validator of request
      * @return the result of forgot password {@link ForgotPasswordResponse}
      */
-    @PostMapping(value = "/forgotPassword",produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/forgotPassword", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ForgotPasswordResponse forgotPassword(@Valid @RequestBody ForgotPasswordRequest request, BindingResult result) {
         List<ErrorValidator> errorValidators = commonService.bindResult(result);
         if (CollectionUtils.isEmpty(errorValidators)) {
@@ -75,7 +75,7 @@ public class PasswordController {
      * @return the response of register {@link RegisterResponse}
      */
     @PostMapping("/register")
-    public RegisterResponse registerCustomer(@Valid RegisterRequest request, BindingResult result) {
+    public RegisterResponse registerCustomer(@Valid @RequestBody RegisterRequest request, BindingResult result) {
         List<ErrorValidator> errorValidators = commonService.bindResult(result);
         if (CollectionUtils.isEmpty(errorValidators)) {
             //register data

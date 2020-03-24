@@ -21,6 +21,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72"
           th:href="@{/libs/users/images/ico/apple-touch-icon-72-precomposed.png}">
     <link rel="apple-touch-icon-precomposed" th:href="@{/libs/users/images/ico/apple-touch-icon-57-precomposed.png}">
+    <link rel="stylesheet" th:href="@{css/style.css}">
 </head><!--/head-->
 
 <body>
@@ -66,9 +67,12 @@
             <div class="col-sm-4 col-sm-offset-1">
                 <div class="signup-form"><!--sign up form-->
                     <h2>Đăng kí tài khoản!</h2>
+                    <div class="alert alert-success hide" id="alertSuccess">
+                        <strong>Đăng kí thành công!</strong>
+                    </div>
                     <form action="#">
                         <input type="text" placeholder="Họ tên" id="name"/>
-                        <p class="error" id="name_errors">validate</p>
+                        <p class="error" id="name_errors"></p>
                         <input type="email" placeholder="Email Address" id="userName"/>
                         <p class="error" id="userName_errors"></p>
                         <input type="password" placeholder="Password" id="password"/>
