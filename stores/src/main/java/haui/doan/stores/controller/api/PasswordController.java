@@ -43,7 +43,7 @@ public class PasswordController {
      * @return the result of  change password {@link ChangePasswordResponse}
      */
     @PostMapping("/changePassword")
-    public ChangePasswordResponse changePassword(@Valid ChangePasswordRequest request, BindingResult result) {
+    public ChangePasswordResponse changePassword(@Valid @RequestBody ChangePasswordRequest request, BindingResult result) {
         List<ErrorValidator> errorValidators = commonService.bindResult(result);
         if (CollectionUtils.isEmpty(errorValidators)) {
             return userService.changePassword(request.toDxo()).toResponse();

@@ -120,6 +120,7 @@ public class UserServiceImpl implements UserService {
         } else if (passwordEncoder.matches(dxo.getPasswordOld(), user.getPassword())) {
             //Password is matches password encode
             user.setPassword(passwordEncoder.encode(dxo.getPassWordNew()));
+            log.info("{} has change password {}", user.getUserName(), dxo.getPassWordNew());
             userRepository.save(user);
             rst.setStatus(true);
         } else {

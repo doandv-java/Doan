@@ -108,6 +108,18 @@
             <artifactId>thymeleaf-extras-springsecurity4</artifactId>
             <version>3.0.4.RELEASE</version>
         </dependency>
+        <!--        Mdb -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>mdbootstrap-bootstrap-material-design</artifactId>
+            <version>4.8.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>font-awesome</artifactId>
+            <version>5.12.0</version>
+        </dependency>
 
     </dependencies>
 

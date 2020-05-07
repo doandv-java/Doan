@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 public class SupplyDetailRst extends RST {
     @Override
     public <T extends RESPONSE> T toResponse() {

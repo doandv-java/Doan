@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Doan Stores</title>
+    <!-- Font Awesome -->
+    <!--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">-->
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/5.12.0/css/all.css}">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/bootstrap.min.css}">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" th:href="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/mdb.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/modules/animations-extended.min.css}">
+    <link rel="stylesheet"
+          th:href="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/addons/datatables.min.css}">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+<div class="container-for-admin">
+    <!--Main Navigation-->
+    <th:block th:replace="admin/fragments/header::header(${user})"/>
+    <!--Main Navigation-->
+
+    <!--Main layout-->
+    <main class="pt-5 mx-lg-5">
+        <div class="container-fluid mt-5">
+            <!--Grid row-->
+            <div class="row wow fadeIn">
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Danh sách quảng cáo</h4>
+                            <div class="table-striped">
+                                <table class="table text-center" id="advertiseTable">
+                                    <thead>
+                                    <tr>
+                                        <th>Ảnh</th>
+                                        <th>Nội dung</th>
+                                        <th>Active</th>
+                                        <th class="text-primary">
+                                            <a href="javascript:void(0)" data-toggle="modal"
+                                               data-target="#advertiseModal"><i
+                                                    class="far fa-plus-square"></i></a>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="advertise:${advertises}" th:id="${advertise.id}">
+                                        <td><img th:src="${advertise.imageLink}"></td>
+                                        <td th:text="${advertise.content}"></td>
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                       th:id="${advertise.id}+'active'"
+                                                       th:checked="${advertise.active==1}"
+                                                       th:onchange="'changeActive('+${advertise.id}+')'">
+                                                <label class="custom-control-label"
+                                                       th:for="${advertise.id}+'active'"></label>
+                                            </div>
+                                        </td>
+                                        <td class="text-primary">
+                                            <a href="javascript:void(0)"
+                                               th:onclick="'editAdvertise('+${advertise.id}+')'"><i
+                                                    class="far fa-edit"></i></a>
+                                            <a href="javascript:void(0)"
+                                               th:onclick="'deleteAdvertise('+${advertise.id}+')'"><i
+                                                    class="fas fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Grid row-->
+        </div>
+    </main>
+    <!--Main layout-->
+
+    <!--    Modal edit create delete-->
+    <div class="modal fade" id="deleteItemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn muốn xóa quảng cáo phải không?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="deleteButton">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="advertiseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Thông tin quảng cáo</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <div>
+                        <input type="hidden" id="id">
+                        <input type="hidden" id="active">
+                        <input type="hidden" id="imageLink">
+                    </div>
+                    <div class="card card-body">
+                        <img src="/upload/no_image.png" id="image_view" class="card-img-top">
+                    </div>
+                    <div class="md-form mb-5">
+                        <textarea type="text" id="content" class="md-textarea form-control" rows="4"></textarea>
+                        <label for="content">Nội dung</label>
+                        <p class="error" id="content_errors"></p>
+                    </div>
+                    <div class="md-form mb-5">
+                        <input type="file" id="image" class="form-control">
+                        <p class="error" id="image_errors"></p>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn btn-unique" id="submitBtn">Lưu<i class="fas fa-paper-plane-o ml-1"></i></button>
+                    <button class="btn btn-unique" data-dismiss="modal">Hủy bỏ<i class="fas fa-paper-plane-o ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Footer-->
+    <th:block th:replace="admin/fragments/footer::footer"/>
+    <script th:src="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/addons/datatables.min.js}"></script>
+    <!--/.Footer-->
+    <script th:src="@{/js/admin_advertise.js}"></script>
+</div>
+</body>
+</html>
